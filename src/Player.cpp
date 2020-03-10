@@ -1,4 +1,4 @@
-#include "../inc/Player.h"
+#include <Player.h>
 
 Player::Player(int x, int y, int w, int h){
     center_x = x;

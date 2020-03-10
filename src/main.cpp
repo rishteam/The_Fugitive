@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-#include "../inc/Player.h"
+#include <Player.h>
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
