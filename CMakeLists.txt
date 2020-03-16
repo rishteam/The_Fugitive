@@ -11,13 +11,12 @@ set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR "/mingw32/lib/cmake/SFML")
 
 find_package(SFML 2.5 COMPONENTS graphics audio window REQUIRED)
-add_executable(TheFugitive
-	src/main.cpp
-	src/game_object.cpp
-	src/Player.cpp
-	inc/game_object.h
-	inc/Player.h
-)
+
+file(GLOB_RECURSE SOURCES src/*.cpp)
+set(INCLUDE_PATH "inc")
+file(GLOB_RECURSE INCLUDES ${INCLUDE_PATH}/*.h)
+add_executable(TheFugitive ${SOURCES} ${INCLUDES})
+
 target_include_directories(TheFugitive PRIVATE "inc")
 target_link_libraries(TheFugitive sfml-graphics sfml-audio)
 
