@@ -5,28 +5,21 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-#include <bits/stdc++.h>
+#include <iostream>
 
 #include "Game.h"
 #include "gamemap.h"
 
 int main()
 {
-    // Start the game loop
-    // Game game;
-    // while (true)
-    // {
-    //     game.run();
-    // }
 
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "MapTest");
     window.setVerticalSyncEnabled(true);
     ImGui::SFML::Init(window);
 
 	GameMap testMap;
+    Game game;
 	sf::Clock deltaClock;
-	static int select[16][9];
-
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -38,29 +31,10 @@ int main()
         }
 
         ImGui::SFML::Update(window, deltaClock.restart());
-		
-        if (ImGui::BeginMainMenuBar()){
-		    if (ImGui::BeginMenu("File")){   
-		        if (ImGui::MenuItem("Quit", "Alt+F4")) break;
-		        ImGui::EndMenu();
-		    }
-		    if (ImGui::BeginMenu("Edit")){   
-		        if( ImGui::MenuItem("Save") ){
-		            auto F = freopen("testMap.data","w",stdout);
-	            	for(int i = 0 ; i < 16 ; i++ ){
-	            		for(int j = 0 ; j < 9 ; j++ ){
-	            			printf("%d%c",select[i][j],j==8?'\n':',');
-	            		}
-	            	}
-	            	fclose(F);
-		        }
-		        ImGui::EndMenu();
-		    }
-		    ImGui::EndMainMenuBar();
-		}
 
 		// map editor
 		ImGui::Begin("Map");
+		static int select[16][9];
 		for(int i = 0 ; i < 16 ; i++ ){
 			for(int j = 0 ; j < 9 ; j++ ){
 				ImGui::PushID(i*16+j);
@@ -84,6 +58,7 @@ int main()
 
 		testMap.update();
         window.clear();
+        game.run(window, event);
         testMap.draw(window);
 		ImGui::SFML::Render(window);
         window.display();

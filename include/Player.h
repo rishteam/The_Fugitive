@@ -1,3 +1,4 @@
+#pragma once
 #include "game_object.h"
 
 class Player : public GameObject{
@@ -19,7 +20,7 @@ public:
     void move_right(int dis);
     void move_up(int dis);
     void move_down(int dis);
+    void handleInput(sf::Event event, int move_unit, int id);
     // void setState();
     // State getState()
-    //void handleInput(sf::Event event);
 };
