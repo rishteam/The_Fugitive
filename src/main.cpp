@@ -5,7 +5,7 @@
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 
-#include <iostream>
+#include <bits/stdc++.h>
 
 #include "Game.h"
 #include "gamemap.h"
@@ -25,6 +25,8 @@ int main()
 
 	GameMap testMap;
 	sf::Clock deltaClock;
+	static int select[16][9];
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -37,9 +39,28 @@ int main()
 
         ImGui::SFML::Update(window, deltaClock.restart());
 		
+        if (ImGui::BeginMainMenuBar()){
+		    if (ImGui::BeginMenu("File")){   
+		        if (ImGui::MenuItem("Quit", "Alt+F4")) break;
+		        ImGui::EndMenu();
+		    }
+		    if (ImGui::BeginMenu("Edit")){   
+		        if( ImGui::MenuItem("Save") ){
+		            auto F = freopen("testMap.data","w",stdout);
+	            	for(int i = 0 ; i < 16 ; i++ ){
+	            		for(int j = 0 ; j < 9 ; j++ ){
+	            			printf("%d%c",select[i][j],j==8?'\n':',');
+	            		}
+	            	}
+	            	fclose(F);
+		        }
+		        ImGui::EndMenu();
+		    }
+		    ImGui::EndMainMenuBar();
+		}
+
 		// map editor
 		ImGui::Begin("Map");
-		static int select[16][9];
 		for(int i = 0 ; i < 16 ; i++ ){
 			for(int j = 0 ; j < 9 ; j++ ){
 				ImGui::PushID(i*16+j);
