@@ -8,10 +8,6 @@ public:
     GameObject(int x, int y, int w, int h);
     ~GameObject() {};
     virtual void init(int x, int y, int w, int h){};
-    void move_left(int dis);
-    void move_right(int dis);
-    void move_up(int dis);
-    void move_down(int dis);
     int get_x();
     int get_y();
     int get_width();
@@ -21,7 +17,7 @@ public:
     void debug(sf::RenderWindow &window);
     void update();
     void draw(sf::RenderWindow &window);
-    bool coll(GameObject &other);
+    bool iscoll(GameObject &other);
 
 protected:
     int width, height;

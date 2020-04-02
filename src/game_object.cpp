@@ -1,4 +1,4 @@
-#include <game_object.h>
+#include "game_object.h"
 
 GameObject::GameObject(int x, int y, int w, int h)
 {
@@ -6,26 +6,6 @@ GameObject::GameObject(int x, int y, int w, int h)
     center_y = y;
     width = w;
     height = h;
-}
-
-void GameObject::move_left(int dis)
-{
-    center_x -= dis;
-}
-
-void GameObject::move_right(int dis)
-{
-    center_x += dis;
-}
-
-void GameObject::move_up(int dis)
-{
-    center_y -= dis;
-}
-
-void GameObject::move_down(int dis)
-{
-    center_y += dis;
 }
 
 int GameObject::get_x()
@@ -62,7 +42,6 @@ void GameObject::update()
 
 void GameObject::debug(sf::RenderWindow &window)
 {
-    printf("%d %d %d %d\n", get_x(), get_y(), get_width(), get_height());
     sf::RectangleShape rect(sf::Vector2f(width, height));
     rect.setPosition(sf::Vector2f(center_x - width / 2, center_y - height / 2));
     rect.setFillColor(sf::Color::Transparent);
@@ -81,7 +60,7 @@ void GameObject::draw(sf::RenderWindow &window)
     window.draw(get_sprite_src());
 }
 
-bool GameObject::coll(GameObject &other)
+bool GameObject::iscoll(GameObject &other)
 {
     int minX1 = center_x - width/2;
     int maxX1 = center_x + width/2;
