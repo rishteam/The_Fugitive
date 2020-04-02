@@ -20,6 +20,11 @@ add_executable(TheFugitive ${SOURCES} ${INCLUDES})
 target_include_directories(TheFugitive PRIVATE "include")
 target_link_libraries(TheFugitive sfml-graphics sfml-audio)
 
+find_package(ImGui-SFML REQUIRED)
+target_link_libraries(TheFugitive
+	ImGui-SFML::ImGui-SFML
+)
+
 # Copy files
 file(COPY ${CMAKE_SOURCE_DIR}/assets DESTINATION ${CMAKE_BINARY_DIR})
 file(GLOB BINARY_DEP_DLLS
