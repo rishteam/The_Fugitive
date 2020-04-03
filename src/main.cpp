@@ -18,10 +18,36 @@ int main()
 	ImGui::SFML::Init(window);
 
 	GameMap testMap;
+	GameMap GM;
 	Game game;
 	sf::Clock deltaClock;
 
-	bool isEditorMap = true;
+	bool isEditorMap = false;
+	
+	if( isEditorMap == false ){
+		
+		int select[16][9];
+		auto F = freopen("level.map", "r", stdin);
+
+		for(int j = 0 ; j < 9 ; j++ ){
+			for(int i = 0 ; i < 16 ; i++ ){
+				std::cin >> select[i][j];
+				if( select[i][j] == 0 )
+					GM.setPlane(i,j);
+				else if( select[i][j] == 1 )
+					GM.setRock(i,j);
+				else if( select[i][j] == 2 )
+					GM.setHole(i,j);
+				else if( select[i][j] == 3 )
+					GM.setKey(i,j);
+				else if( select[i][j] == 4 )
+					GM.setNone(i,j);
+			}
+		}
+
+		fclose(F);
+
+	}
 
 	while (window.isOpen()) {
 		sf::Event event;
@@ -42,13 +68,11 @@ int main()
 			ImGui::Begin("Save Map");
 			if( ImGui::Button("SAVE") ){
 				auto F = freopen("level.map", "w", stdout);
-				printf("{\n");
 				for(int j = 0 ; j < 9 ; j++ ){
 					for(int i = 0 ; i < 16 ; i++ ){
-						printf("%d%c",select[i][j],i==15?'\n':',');
+						printf("%d%c",select[i][j],i==15?'\n':' ');
 					}
 				}
-				printf("}");
 				fclose(F);
 			}
 			ImGui::End();
@@ -82,13 +106,19 @@ int main()
 
 		}
 
-		testMap.update();
 		window.clear();
-		testMap.draw(window);
-		game.run(window, event);
+		if( isEditorMap ){
+			testMap.update();
+			testMap.draw(window);
+		}else{
+			GM.update();
+			GM.draw(window);
+		}
+		// game.run(window, event);
 		ImGui::SFML::Render(window);
 		window.display();
 	}
 
 	return EXIT_SUCCESS;
 }
+

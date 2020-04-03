@@ -72,12 +72,11 @@ void GameMap::draw(sf::RenderWindow &window){
 			}
 			if( m_table[i][j] == Obj::KEY ){
 				m_plane[i][j].update();
-				m_key[i][j].update();
 				m_plane[i][j].draw(window);
+				m_key[i][j].update();
 				m_key[i][j].draw(window);
 			}
 		}
 	}
 
-	
 }
