@@ -7,6 +7,14 @@ class Game
 {
 public:
     Game() = default;
-    void run(sf::RenderWindow &window, sf::Event &event);
-    void handleEvent(sf::RenderWindow &window, sf::Event event);
+    ~Game() = default;
+    void init();
+    void catch_event(sf::Event &e);
+    sf::Event get_event();
+    void run(sf::RenderWindow &window);
+    void edge_detect();
+    void handleEvent(sf::RenderWindow &window, Player &player, int move_unit);
+private:
+    Player player1, player2;
+    sf::Event event;
 };

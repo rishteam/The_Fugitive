@@ -1,44 +1,115 @@
 #include <iostream>
 #include "Game.h"
 
+
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 #define GAME_NAME "The_Fugitive"
 #define MOVE_UNIT 10
 
-void Game::run(sf::RenderWindow &window, sf::Event &event)
+void Game::init()
 {
-    Player player1(50, 50, 100, 100), player2(500, 500, 100, 100);
+    player1.init(150, 150, 100, 100, 1), player2.init(500, 500, 100, 100, 2);
     player1.set_sprite_src("assets/player.png", 50, 50);
     player2.set_sprite_src("assets/player.png", 50, 50);
+}
 
-    handleEvent(window, event);
+void Game::catch_event(sf::Event &e)
+{
+    event = e;
+}
+
+sf::Event Game::get_event()
+{
+    return event;
+}
+
+void Game::run(sf::RenderWindow &window)
+{
+    player1.storePos();
+    player2.storePos();
+    handleEvent(window, player1, MOVE_UNIT);
+    handleEvent(window, player2, MOVE_UNIT);
+    edge_detect();
+
     if (player1.iscoll(player2))
     {
-        std::cout << "is Collision" << '\n';
-    }
-    else
-    {
-        std::cout << "is not Collision" << '\n';
+        player1.releasePos();
+        player2.releasePos();
     }
 
-    player1.debug(window);
     player1.update();
+    player1.debug(window);
     player1.draw(window);
-    player2.handleInput(event, MOVE_UNIT, 2);
-    // player1.handleInput(event, MOVE_UNIT, 1);
+
     player2.debug(window);
     player2.update();
     player2.draw(window);
 
 }
 
-void Game::handleEvent(sf::RenderWindow &window, sf::Event event)
+void Game::edge_detect()
 {
-    switch (event.type)
+    // //out of edge range
+    if (player1.get_x() - player1.get_width()/2 <= 0 ||
+        player1.get_x() + player1.get_width()/2 >= WINDOW_WIDTH ||
+        player1.get_y() - player1.get_height()/2 <= 0 ||
+        player1.get_y() + player1.get_height()/2 >= WINDOW_HEIGHT)
     {
-        case sf::Event::Closed:
-            window.close();
-            break;
+        player1.releasePos();
+    }
+    if (player2.get_x() - player2.get_width()/2  <= 0 ||
+        player2.get_x() + player2.get_width()/2  >= WINDOW_WIDTH ||
+        player2.get_y() - player2.get_height()/2 <= 0 ||
+        player2.get_y() + player2.get_height()/2 >= WINDOW_HEIGHT)
+    {
+        player2.releasePos();
+    }
+}
+
+void Game::handleEvent(sf::RenderWindow &window, Player &player, int move_unit)
+{
+    switch (get_event().type)
+    {
+        case sf::Event::EventType::KeyPressed:
+            switch(player.getid())
+            {
+                case 1:
+                    if (event.key.code == sf::Keyboard::Up)
+                    {
+                        player.move_up(move_unit);
+                    }
+                    if (event.key.code == sf::Keyboard::Down)
+                    {
+                        player.move_down(move_unit);
+                    }
+                    if (event.key.code == sf::Keyboard::Left)
+                    {
+                        player.move_left(move_unit);
+                    }
+                    if (event.key.code == sf::Keyboard::Right)
+                    {
+                        player.move_right(move_unit);
+                    }
+                    break;
+                case 2:
+                    if (event.key.code == sf::Keyboard::W)
+                    {
+                        player.move_up(move_unit);
+                    }
+                    if (event.key.code == sf::Keyboard::S)
+                    {
+                        player.move_down(move_unit);
+                    }
+                    if (event.key.code == sf::Keyboard::A)
+                    {
+                        player.move_left(move_unit);
+                    }
+                    if (event.key.code == sf::Keyboard::D)
+                    {
+                        player.move_right(move_unit);
+                    }
+                    break;
+            }
     }
 }

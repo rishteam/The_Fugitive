@@ -13,6 +13,10 @@ public:
     int get_y();
     int get_width();
     int get_height();
+    int set_x(int x);
+    int set_y(int y);
+    int set_width(int w);
+    int set_height(int h);
     void set_sprite_src(std::string route, float pos_x, float pos_y);
     sf::Sprite get_sprite_src();
     void debug(sf::RenderWindow &window);

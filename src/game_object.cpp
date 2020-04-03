@@ -28,6 +28,26 @@ int GameObject::get_height()
     return height;
 }
 
+int GameObject::set_x(int x)
+{
+    center_x = x;
+}
+
+int GameObject::set_y(int y)
+{
+    center_y = y;
+}
+
+int GameObject::set_width(int w)
+{
+    width = w;
+}
+
+int GameObject::set_height(int h)
+{
+    height = h;
+}
+
 void GameObject::set_sprite_src(std::string route, float pos_x, float pos_y)
 {
     object_Texture.loadFromFile(route);

@@ -20,12 +20,13 @@ int main()
 	GameMap testMap;
 	GameMap GM;
 	Game game;
+	game.init();
 	sf::Clock deltaClock;
 
-	bool isEditorMap = false;
-	
+	bool isEditorMap = true;
+
 	if( isEditorMap == false ){
-		
+
 		int select[16][9];
 		auto F = freopen("level.map", "r", stdin);
 
@@ -57,6 +58,7 @@ int main()
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
+			game.catch_event(event);
 		}
 
 		ImGui::SFML::Update(window, deltaClock.restart());
@@ -114,7 +116,7 @@ int main()
 			GM.update();
 			GM.draw(window);
 		}
-		// game.run(window, event);
+		game.run(window);
 		ImGui::SFML::Render(window);
 		window.display();
 	}
