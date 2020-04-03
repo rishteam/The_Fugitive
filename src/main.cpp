@@ -14,55 +14,81 @@ int main()
 {
 
 	sf::RenderWindow window(sf::VideoMode(1280, 720), "MapTest");
-    window.setVerticalSyncEnabled(true);
-    ImGui::SFML::Init(window);
+	window.setVerticalSyncEnabled(true);
+	ImGui::SFML::Init(window);
 
 	GameMap testMap;
-    Game game;
+	Game game;
 	sf::Clock deltaClock;
-    while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            ImGui::SFML::ProcessEvent(event);
 
-            if (event.type == sf::Event::Closed) {
-                window.close();
-            }
-        }
+	bool isEditorMap = true;
 
-        ImGui::SFML::Update(window, deltaClock.restart());
+	while (window.isOpen()) {
+		sf::Event event;
+		while (window.pollEvent(event)) {
+			ImGui::SFML::ProcessEvent(event);
 
-		// map editor
-		ImGui::Begin("Map");
-		static int select[16][9];
-		for(int i = 0 ; i < 16 ; i++ ){
-			for(int j = 0 ; j < 9 ; j++ ){
-				ImGui::PushID(i*16+j);
-				ImGui::Text("%d %d",i,j);
-				ImGui::RadioButton("None", &select[i][j],0);ImGui::SameLine();
-				ImGui::RadioButton("Rock", &select[i][j],1);ImGui::SameLine();
-				ImGui::RadioButton("Plane", &select[i][j],2);
-
-				if( select[i][j] == 0 )
-					testMap.setNone(i,j);
-				else if( select[i][j] == 1 )
-					testMap.setRock(i,j);
-				else if( select[i][j] == 2 )
-					testMap.setPlane(i,j);
-
-				ImGui::PopID();
+			if (event.type == sf::Event::Closed) {
+				window.close();
 			}
 		}
-		ImGui::End();
-		// end map editor
+
+		ImGui::SFML::Update(window, deltaClock.restart());
+
+		if( isEditorMap ){
+
+			// map editor
+			static int select[16][9];
+			ImGui::Begin("Save Map");
+			if( ImGui::Button("SAVE") ){
+				auto F = freopen("level.map", "w", stdout);
+				printf("{\n");
+				for(int j = 0 ; j < 9 ; j++ ){
+					for(int i = 0 ; i < 16 ; i++ ){
+						printf("%d%c",select[i][j],i==15?'\n':',');
+					}
+				}
+				printf("}");
+				fclose(F);
+			}
+			ImGui::End();
+			ImGui::Begin("Map");
+			for(int i = 0 ; i < 16 ; i++ ){
+				for(int j = 0 ; j < 9 ; j++ ){
+					ImGui::PushID(i*16+j);
+					ImGui::Text("%d %d",i,j);
+					ImGui::RadioButton("Plane", &select[i][j],0);ImGui::SameLine();
+					ImGui::RadioButton("Rock", &select[i][j],1);ImGui::SameLine();
+					ImGui::RadioButton("Hole", &select[i][j],2);ImGui::SameLine();
+					ImGui::RadioButton("Key", &select[i][j],3);ImGui::SameLine();
+					ImGui::RadioButton("None", &select[i][j],4);
+
+					if( select[i][j] == 0 )
+						testMap.setPlane(i,j);
+					else if( select[i][j] == 1 )
+						testMap.setRock(i,j);
+					else if( select[i][j] == 2 )
+						testMap.setHole(i,j);
+					else if( select[i][j] == 3 )
+						testMap.setKey(i,j);
+					else if( select[i][j] == 4 )
+						testMap.setNone(i,j);
+
+					ImGui::PopID();
+				}
+			}
+			ImGui::End();
+			// end map editor
+
+		}
 
 		testMap.update();
-        window.clear();
-        game.run(window, event);
-        testMap.draw(window);
+		window.clear();
+		testMap.draw(window);
+		game.run(window, event);
 		ImGui::SFML::Render(window);
-        window.display();
-    }
+		window.display();
+	}
 
-    return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
