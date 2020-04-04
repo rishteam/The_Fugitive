@@ -5,8 +5,7 @@ class Player : public GameObject{
 
 protected:
     int id = 0;
-    int pre_x = 0;
-    int pre_y = 0;
+    int pre_x = 0, pre_y = 0;
     enum class State
     {
         STATE_STANDING,
@@ -26,6 +25,8 @@ public:
     void move_right(int dis);
     void move_up(int dis);
     void move_down(int dis);
+    void update_imgui_parameter();
+    float imgui_x,imgui_y;
     // void setState();
     // State getState()
 };

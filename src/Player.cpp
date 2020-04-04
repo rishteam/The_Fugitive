@@ -55,6 +55,12 @@ void Player::move_down(int dis)
     center_y += dis;
 }
 
+void Player::update_imgui_parameter()
+{
+    imgui_x = center_x;
+    imgui_y = center_y;
+}
+
 // void Player::setState()
 // {
 
@@ -64,5 +70,3 @@ void Player::move_down(int dis)
 // {
 
 // }
-
-

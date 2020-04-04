@@ -1,6 +1,3 @@
-#include "imgui.h"
-#include "imgui-SFML.h"
-
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -8,6 +5,7 @@
 #include <iostream>
 
 #include "Game.h"
+#include "imgui_include.h"
 #include "gamemap.h"
 
 int main()
@@ -21,6 +19,7 @@ int main()
 	GameMap GM;
 	Game game;
 	game.init();
+
 	sf::Clock deltaClock;
 
 	bool isEditorMap = true;
@@ -47,7 +46,6 @@ int main()
 		}
 
 		fclose(F);
-
 	}
 
 	while (window.isOpen()) {
@@ -59,8 +57,8 @@ int main()
 				window.close();
 			}
 		}
-
 		ImGui::SFML::Update(window, deltaClock.restart());
+		game.imgui();
 
 		if( isEditorMap ){
 

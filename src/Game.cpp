@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Game.h"
-
+#include "imgui_include.h"
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
@@ -13,6 +13,18 @@ void Game::init()
     player1.set_sprite_src("assets/player.png", 50, 50);
     player2.set_sprite_src("assets/player.png", 50, 50);
 }
+
+void Game::imgui()
+{
+    ImGui::Begin("Player1 Setting");
+    ImGui::Text("Player1");
+        ImGui::SliderFloat("player1_center_x", (float *)&player1.imgui_x, 0.0f, 1280.0f, "%.0f");
+        ImGui::SliderFloat("player1_center_y", (float *)&player1.imgui_y, 0.0f, 720.0f, "%.0f");
+        player1.set_x((int)player1.imgui_x);
+        player1.set_y((int)player1.imgui_y);
+    ImGui::End();
+}
+
 
 void Game::run(sf::RenderWindow &window)
 {
@@ -29,11 +41,13 @@ void Game::run(sf::RenderWindow &window)
     }
 
     player1.update();
+    player1.update_imgui_parameter();
     player1.debug(window);
     player1.draw(window);
 
-    player2.debug(window);
     player2.update();
+    player2.update_imgui_parameter();
+    player2.debug(window);
     player2.draw(window);
 
 }
