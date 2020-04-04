@@ -9,19 +9,9 @@
 
 void Game::init()
 {
-    player1.init(150, 150, 100, 100, 1), player2.init(500, 500, 100, 100, 2);
+    player1.init(200, 150, 100, 100, 1), player2.init(500, 500, 100, 100, 2);
     player1.set_sprite_src("assets/player.png", 50, 50);
     player2.set_sprite_src("assets/player.png", 50, 50);
-}
-
-void Game::catch_event(sf::Event &e)
-{
-    event = e;
-}
-
-sf::Event Game::get_event()
-{
-    return event;
 }
 
 void Game::run(sf::RenderWindow &window)
@@ -69,47 +59,43 @@ void Game::edge_detect()
 
 void Game::handleEvent(sf::RenderWindow &window, Player &player, int move_unit)
 {
-    switch (get_event().type)
+    switch(player.getid())
     {
-        case sf::Event::EventType::KeyPressed:
-            switch(player.getid())
+        case 1:
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
             {
-                case 1:
-                    if (event.key.code == sf::Keyboard::Up)
-                    {
-                        player.move_up(move_unit);
-                    }
-                    if (event.key.code == sf::Keyboard::Down)
-                    {
-                        player.move_down(move_unit);
-                    }
-                    if (event.key.code == sf::Keyboard::Left)
-                    {
-                        player.move_left(move_unit);
-                    }
-                    if (event.key.code == sf::Keyboard::Right)
-                    {
-                        player.move_right(move_unit);
-                    }
-                    break;
-                case 2:
-                    if (event.key.code == sf::Keyboard::W)
-                    {
-                        player.move_up(move_unit);
-                    }
-                    if (event.key.code == sf::Keyboard::S)
-                    {
-                        player.move_down(move_unit);
-                    }
-                    if (event.key.code == sf::Keyboard::A)
-                    {
-                        player.move_left(move_unit);
-                    }
-                    if (event.key.code == sf::Keyboard::D)
-                    {
-                        player.move_right(move_unit);
-                    }
-                    break;
+                player.move_up(move_unit);
             }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+            {
+                player.move_down(move_unit);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+            {
+                player.move_left(move_unit);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+            {
+                player.move_right(move_unit);
+            }
+            break;
+        case 2:
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+            {
+                player.move_up(move_unit);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            {
+                player.move_down(move_unit);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            {
+                player.move_left(move_unit);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            {
+                player.move_right(move_unit);
+            }
+            break;
     }
 }

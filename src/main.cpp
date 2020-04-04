@@ -58,7 +58,6 @@ int main()
 			if (event.type == sf::Event::Closed) {
 				window.close();
 			}
-			game.catch_event(event);
 		}
 
 		ImGui::SFML::Update(window, deltaClock.restart());
