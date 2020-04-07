@@ -7,14 +7,14 @@ GameMap::GameMap(){
 
 	for(int i = 0 ; i < 16 ; i++ ){
 		for(int j = 0 ; j < 9 ; j++ ){
-			m_rock[i][j] = Rock(i*80,j*80,80,80);
-			m_rock[i][j].set_sprite_src("assets/rock.png",80,80);
-			m_plane[i][j] = Plane(i*80,j*80,80,80);
-			m_plane[i][j] .set_sprite_src("assets/plane.png",80,80);
-			m_hole[i][j] = Hole(i*80,j*80,80,80);
-			m_hole[i][j].set_sprite_src("assets/hole.png",80,80);
-			m_key[i][j] = Key(i*80,j*80,80,80);
-			m_key[i][j].set_sprite_src("assets/key.png",80,80);
+			m_rock[i][j] = Rock(i*80+40,j*80+40,80,80);
+			m_rock[i][j].set_sprite_src("assets/rock.png");
+			m_plane[i][j] = Plane(i*80+40,j*80+40,80,80);
+			m_plane[i][j] .set_sprite_src("assets/plane.png");
+			m_hole[i][j] = Hole(i*80+40,j*80+40,80,80);
+			m_hole[i][j].set_sprite_src("assets/hole.png");
+			m_key[i][j] = Key(i*80+40,j*80+40,80,80);
+			m_key[i][j].set_sprite_src("assets/key.png");
 		}
 	}
 
@@ -49,9 +49,28 @@ void GameMap::setKey(int i, int j){
 	m_table[i][j] = Obj::KEY;
 }
 
-
 void GameMap::update(){
 
+}
+
+GameObject& GameMap::Get_gameObject(int i, int j)
+{
+	if(m_table[i][j] == Obj::ROCK)
+	{
+		return m_rock[i][j];
+	}
+	else if (m_table[i][j] == Obj::PLANE)
+	{
+		return m_plane[i][j];
+	}
+	else if (m_table[i][j] == Obj::HOLE)
+	{
+		return m_hole[i][j];
+	}
+	else if (m_table[i][j] == Obj::KEY)
+	{
+		return m_key[i][j];
+	}
 }
 
 void GameMap::draw(sf::RenderWindow &window){

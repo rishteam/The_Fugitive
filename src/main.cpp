@@ -60,59 +60,59 @@ int main()
 		ImGui::SFML::Update(window, deltaClock.restart());
 		game.imgui();
 
-		if( isEditorMap ){
+		// if( isEditorMap ){
 
-			// map editor
-			static int select[16][9];
-			ImGui::Begin("Save Map");
-			if( ImGui::Button("SAVE") ){
-				auto F = freopen("level.map", "w", stdout);
-				for(int j = 0 ; j < 9 ; j++ ){
-					for(int i = 0 ; i < 16 ; i++ ){
-						printf("%d%c",select[i][j],i==15?'\n':' ');
-					}
-				}
-				fclose(F);
-			}
-			ImGui::End();
-			ImGui::Begin("Map");
-			for(int i = 0 ; i < 16 ; i++ ){
-				for(int j = 0 ; j < 9 ; j++ ){
-					ImGui::PushID(i*16+j);
-					ImGui::Text("%d %d",i,j);
-					ImGui::RadioButton("Plane", &select[i][j],0);ImGui::SameLine();
-					ImGui::RadioButton("Rock", &select[i][j],1);ImGui::SameLine();
-					ImGui::RadioButton("Hole", &select[i][j],2);ImGui::SameLine();
-					ImGui::RadioButton("Key", &select[i][j],3);ImGui::SameLine();
-					ImGui::RadioButton("None", &select[i][j],4);
+		// 	// map editor
+		// 	static int select[16][9];
 
-					if( select[i][j] == 0 )
-						testMap.setPlane(i,j);
-					else if( select[i][j] == 1 )
-						testMap.setRock(i,j);
-					else if( select[i][j] == 2 )
-						testMap.setHole(i,j);
-					else if( select[i][j] == 3 )
-						testMap.setKey(i,j);
-					else if( select[i][j] == 4 )
-						testMap.setNone(i,j);
+		// 	ImGui::Begin("Save Map");
+		// 	if( ImGui::Button("SAVE") ){
+		// 		auto F = freopen("level.map", "w", stdout);
+		// 		for(int j = 0 ; j < 9 ; j++ ){
+		// 			for(int i = 0 ; i < 16 ; i++ ){
+		// 				printf("%d%c",select[i][j],i==15?'\n':' ');
+		// 			}
+		// 		}
+		// 		fclose(F);
+		// 	}
+		// 	ImGui::End();
+		// 	ImGui::Begin("Map");
+		// 	for(int i = 0 ; i < 16 ; i++ ){
+		// 		for(int j = 0 ; j < 9 ; j++ ){
+		// 			ImGui::PushID(i*16+j);
+		// 			ImGui::Text("%d %d",i,j);
+		// 			ImGui::RadioButton("Plane", &select[i][j],0);ImGui::SameLine();
+		// 			ImGui::RadioButton("Rock", &select[i][j],1);ImGui::SameLine();
+		// 			ImGui::RadioButton("Hole", &select[i][j],2);ImGui::SameLine();
+		// 			ImGui::RadioButton("Key", &select[i][j],3);ImGui::SameLine();
+		// 			ImGui::RadioButton("None", &select[i][j],4);
 
-					ImGui::PopID();
-				}
-			}
-			ImGui::End();
-			// end map editor
+		// 			if( select[i][j] == 0 )
+		// 				testMap.setPlane(i,j);
+		// 			else if( select[i][j] == 1 )
+		// 				testMap.setRock(i,j);
+		// 			else if( select[i][j] == 2 )
+		// 				testMap.setHole(i,j);
+		// 			else if( select[i][j] == 3 )
+		// 				testMap.setKey(i,j);
+		// 			else if( select[i][j] == 4 )
+		// 				testMap.setNone(i,j);
 
-		}
+		// 			ImGui::PopID();
+		// 		}
+		// 	}
+		// 	ImGui::End();
+		// 	// end map editor
+		// }
 
 		window.clear();
-		if( isEditorMap ){
-			testMap.update();
-			testMap.draw(window);
-		}else{
-			GM.update();
-			GM.draw(window);
-		}
+		// if( isEditorMap ){
+		// 	testMap.update();
+		// 	testMap.draw(window);
+		// }else{
+		// 	GM.update();
+		// 	GM.draw(window);
+		// }
 		game.run(window);
 		ImGui::SFML::Render(window);
 		window.display();

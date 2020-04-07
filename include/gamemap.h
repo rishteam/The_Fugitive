@@ -1,5 +1,7 @@
+#pragma once
 #include "obj.h"
 #include <vector>
+#include <utility>
 
 class GameMap{
 
@@ -10,9 +12,10 @@ public:
 	void setPlane(int i, int j);
 	void setHole(int i, int j);
 	void setKey(int i, int j);
+	void getMapCord(int i, int j);
+	GameObject& Get_gameObject(int i, int j);
 	void update();
 	void draw(sf::RenderWindow &window);
-
 	void editor(sf::RenderWindow &window);
 
 private:

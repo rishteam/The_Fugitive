@@ -28,42 +28,49 @@ int GameObject::get_height()
     return height;
 }
 
-int GameObject::set_x(int x)
+void GameObject::set_x(int x)
 {
     center_x = x;
 }
 
-int GameObject::set_y(int y)
+void GameObject::set_y(int y)
 {
     center_y = y;
 }
 
-int GameObject::set_width(int w)
+void GameObject::set_width(int w)
 {
     width = w;
 }
 
-int GameObject::set_height(int h)
+void GameObject::set_height(int h)
 {
     height = h;
 }
 
-void GameObject::set_sprite_src(std::string route, float pos_x, float pos_y)
+void GameObject::scale(float x, float y)
+{
+    object_Sprite.scale(sf::Vector2f(x, y));
+}
+
+void GameObject::set_sprite_src(std::string route)
 {
     object_Texture.loadFromFile(route);
     object_Sprite.setTexture(object_Texture);
-    object_Sprite.setPosition(pos_x, pos_y);
+    object_Sprite.setPosition(center_x - (width / 2), center_y - (height / 2));
 }
+
 
 void GameObject::update()
 {
-    object_Sprite.setPosition(center_x, center_y);
+    object_Sprite.setPosition(center_x - (width/2), center_y - (height/2));
 }
 
+//debug rectangle
 void GameObject::debug(sf::RenderWindow &window)
 {
     sf::RectangleShape rect(sf::Vector2f(width, height));
-    rect.setPosition(sf::Vector2f(center_x - width / 2, center_y - height / 2));
+    rect.setPosition(sf::Vector2f(center_x - (width / 2), center_y - (height / 2)));
     rect.setFillColor(sf::Color::Transparent);
     rect.setOutlineThickness(2.0f);
     rect.setOutlineColor(sf::Color::Red);
