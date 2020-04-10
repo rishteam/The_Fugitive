@@ -58,7 +58,7 @@ int main()
 			}
 		}
 		ImGui::SFML::Update(window, deltaClock.restart());
-		game.imgui();
+		game.imgui(window);
 
 		// if( isEditorMap ){
 

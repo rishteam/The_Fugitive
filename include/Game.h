@@ -10,7 +10,7 @@ public:
     Game() = default;
     ~Game() = default;
     void init();
-    void imgui();
+    void imgui(sf::RenderWindow &window);
     void map_collision_test(sf::RenderWindow &window);
     void run(sf::RenderWindow &window);
     void coll_detect();
