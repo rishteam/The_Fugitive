@@ -36,30 +36,14 @@ void Game::imgui(sf::RenderWindow &window)
 	// ImGui::End();
 
 	//draw map
-	sf::Texture testT[5];
-	sf::Sprite testS[5];
-	testT[0].loadFromFile("assets/rock.png");
-	testS[0].setTexture(testT[0]);
-
-	testT[1].loadFromFile("assets/plane.png");
-	testS[1].setTexture(testT[1]);
-
-	testT[2].loadFromFile("assets/hole.png");
-	testS[2].setTexture(testT[2]);
-
-	testT[3].loadFromFile("assets/key.png");
-	testS[3].setTexture(testT[3]);
 
 	ImGui::Begin("test");
 	ImGui::Image(testS[0]);
 	ImGui::End();
-	window.clear();
 	testS[0].setPosition(222,222);
 	window.draw(testS[0]);
 
-
 	ImGui::Begin("Map");
-
 
 	if(ImGui::ImageButton(testS[0],ImVec2(30,30)))
 		printf("0\n");

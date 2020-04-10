@@ -20,6 +20,8 @@ int main()
 	Game game;
 	game.init();
 
+	game.initRes(); // TODO: for debug only
+
 	sf::Clock deltaClock;
 
 	bool isEditorMap = true;
@@ -27,6 +29,7 @@ int main()
 	if( isEditorMap == false ){
 
 		int select[16][9];
+		// Comment(roy4801): 請改用 `fstream`
 		auto F = freopen("level.map", "r", stdin);
 
 		for(int j = 0 ; j < 9 ; j++ ){
@@ -58,6 +61,7 @@ int main()
 			}
 		}
 		ImGui::SFML::Update(window, deltaClock.restart());
+		window.clear();
 		game.imgui(window);
 
 		// if( isEditorMap ){
@@ -105,7 +109,6 @@ int main()
 		// 	// end map editor
 		// }
 
-		window.clear();
 		// if( isEditorMap ){
 		// 	testMap.update();
 		// 	testMap.draw(window);

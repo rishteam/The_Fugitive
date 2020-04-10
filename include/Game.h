@@ -16,6 +16,25 @@ public:
     void coll_detect();
     void handleEvent(sf::RenderWindow &window, Player &player, int move_unit);
 
+// TODO: Debug
+public:
+    sf::Texture testT[5];
+    sf::Sprite testS[5];
+    void initRes()
+    {
+        testT[0].loadFromFile("assets/rock.png");
+        testS[0].setTexture(testT[0]);
+
+        testT[1].loadFromFile("assets/plane.png");
+        testS[1].setTexture(testT[1]);
+
+        testT[2].loadFromFile("assets/hole.png");
+        testS[2].setTexture(testT[2]);
+
+        testT[3].loadFromFile("assets/key.png");
+        testS[3].setTexture(testT[3]);
+    }
+
 protected:
     int select[16][9];
 
