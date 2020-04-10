@@ -22,11 +22,11 @@ public:
     sf::Sprite testS[5];
     void initRes()
     {
-        testT[0].loadFromFile("assets/rock.png");
-        testS[0].setTexture(testT[0]);
-
-        testT[1].loadFromFile("assets/plane.png");
+        testT[1].loadFromFile("assets/rock.png");
         testS[1].setTexture(testT[1]);
+
+        testT[0].loadFromFile("assets/plane.png");
+        testS[0].setTexture(testT[0]);
 
         testT[2].loadFromFile("assets/hole.png");
         testS[2].setTexture(testT[2]);

@@ -37,25 +37,19 @@ void Game::imgui(sf::RenderWindow &window)
 
 	//draw map
 
-	ImGui::Begin("test");
-	ImGui::Image(testS[0]);
+	ImGui::Begin("Save Map");
+	if( ImGui::Button("SAVE") ){
+		auto F = freopen("level.map", "w", stdout);
+		for(int j = 0 ; j < 9 ; j++ ){
+			for(int i = 0 ; i < 16 ; i++ ){
+				printf("%d%c",select[i][j],i==15?'\n':' ');
+			}
+		}
+		fclose(F);
+	}
 	ImGui::End();
-	testS[0].setPosition(222,222);
-	window.draw(testS[0]);
 
 	ImGui::Begin("Map");
-
-	if(ImGui::ImageButton(testS[0],ImVec2(30,30)))
-		printf("0\n");
-	ImGui::SameLine();
-	if(ImGui::ImageButton(testS[1],ImVec2(30,30)))
-		printf("1\n");
-	ImGui::SameLine();
-	if(ImGui::ImageButton(testS[2],ImVec2(30,30)))
-		printf("2\n");
-	ImGui::SameLine();
-	if(ImGui::ImageButton(testS[3],ImVec2(30,30)))
-		printf("3\n");
 
 	for (int j = 0; j < 9; j++)
 	{
@@ -64,14 +58,8 @@ void Game::imgui(sf::RenderWindow &window)
 		{
 			ImGui::PushID(j * 20 + i);
 			
-			// if( ImGui::ImageButton(testS[select[i][j]],ImVec2(30,30)) ){
-			// 	select[i][j] = (select[i][j]+1)%5;
-			// }
-
-			std::string str = std::to_string(select[i][j]);
-			char const *Btn = str.c_str();
-			if( ImGui::Button(Btn,ImVec2(30,30)) ){
-				select[i][j] = (select[i][j]+1)%5;
+			if( ImGui::ImageButton(testS[select[i][j]],ImVec2(30,30)) ){
+				select[i][j] = (select[i][j]+1)%4;
 			}
 			
 			ImGui::SameLine();
