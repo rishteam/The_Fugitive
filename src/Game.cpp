@@ -7,7 +7,6 @@
 #define WINDOW_HEIGHT 720
 #define GAME_NAME "The_Fugitive"
 
-
 void Game::init()
 {
     player1.init(100, 100, 80, 80, 1);
@@ -25,73 +24,82 @@ void Game::init()
     }
 }
 
-void Game::imgui()
+void Game::imgui(sf::RenderWindow &window)
 {
-    // ImGui::Begin("Player1 Setting");
-    // ImGui::Text("Player1");
-    //     ImGui::SliderFloat("player1_center_x", (float *)&player1.imgui_x, 0.0f, 1280.0f, "%.0f");
-    //     ImGui::SliderFloat("player1_center_y", (float *)&player1.imgui_y, 0.0f, 720.0f, "%.0f");
-    //     player1.set_x((int)player1.imgui_x);
-    //     player1.set_y((int)player1.imgui_y);
-    // ImGui::End();
+	// ImGui::Begin("Player1 Setting");
+	// ImGui::Text("Player1");
+	//     ImGui::SliderFloat("player1_center_x", (float *)&player1.imgui_x, 0.0f, 1280.0f, "%.0f");
+	//     ImGui::SliderFloat("player1_center_y", (float *)&player1.imgui_y, 0.0f, 720.0f, "%.0f");
+	//     player1.set_x((int)player1.imgui_x);
+	//     player1.set_y((int)player1.imgui_y);
+	// ImGui::End();
 
+	//draw map
 
-    //draw map
-    ImGui::Begin("Map");
-    for (int i = 0; i < 16; i++)
-    {
-        for (int j = 0; j < 9; j++)
-        {
-            ImGui::PushID(i * 16 + j);
-            ImGui::Text("%d %d", i, j);
-            ImGui::RadioButton("Plane", &select[i][j], 0);
-            ImGui::SameLine();
-            ImGui::RadioButton("Rock", &select[i][j], 1);
-            ImGui::SameLine();
-            ImGui::RadioButton("Hole", &select[i][j], 2);
-            ImGui::SameLine();
-            ImGui::RadioButton("Key", &select[i][j], 3);
-            ImGui::SameLine();
-            ImGui::RadioButton("None", &select[i][j], 4);
+	ImGui::Begin("Save Map");
+	if( ImGui::Button("SAVE") ){
+		auto F = freopen("level.map", "w", stdout);
+		for(int j = 0 ; j < 9 ; j++ ){
+			for(int i = 0 ; i < 16 ; i++ ){
+				printf("%d%c",select[i][j],i==15?'\n':' ');
+			}
+		}
+		fclose(F);
+	}
+	ImGui::End();
 
-            if (select[i][j] == 0)
-                testMap.setPlane(i, j);
-            else if (select[i][j] == 1)
-                testMap.setRock(i, j);
-            else if (select[i][j] == 2)
-                testMap.setHole(i, j);
-            else if (select[i][j] == 3)
-                testMap.setKey(i, j);
-            else if (select[i][j] == 4)
-                testMap.setNone(i, j);
+	ImGui::Begin("Map");
 
-            ImGui::PopID();
-        }
-    }
-    ImGui::End();
+	for (int j = 0; j < 9; j++)
+	{
+		ImGui::NewLine();
+		for (int i = 0; i < 16; i++)
+		{
+			ImGui::PushID(j * 20 + i);
+			
+			if( ImGui::ImageButton(testS[select[i][j]],ImVec2(30,30)) ){
+				select[i][j] = (select[i][j]+1)%4;
+			}
+			
+			ImGui::SameLine();
+			if (select[i][j] == 0)
+				testMap.setPlane(i, j);
+			else if (select[i][j] == 1)
+				testMap.setRock(i, j);
+			else if (select[i][j] == 2)
+				testMap.setHole(i, j);
+			else if (select[i][j] == 3)
+				testMap.setKey(i, j);
+			else if (select[i][j] == 4)
+				testMap.setNone(i, j);
+
+			ImGui::PopID();
+		}
+	}
+	ImGui::End();
 }
 
 void Game::map_collision_test(sf::RenderWindow &window)
 {
-    for(int i = 0; i < 16; i++)
-    {
-        for(int j = 0; j < 9; j++)
-        {
-            // std::cout << i << " " << j << '\n';
-            if(i == 2 && j == 2)
-            {
-                // std::cout << testMap.Get_gameObject(i, j).get_x() << " " << testMap.Get_gameObject(i, j).get_y() << '\n';
-                if (player1.iscoll(testMap.Get_gameObject(i, j)))
-                {
-                    player1.releasePos();
-                }
-                if (player2.iscoll(testMap.Get_gameObject(i, j)))
-                {
-                    player2.releasePos();
-                }
-            }
-        }
-    }
+	for(int i = 0; i < 16; i++)
+	{
+		for(int j = 0; j < 9; j++)
+		{
+			// std::cout << i << " " << j << '\n';
+			if(i == 2 && j == 2)
+			{
+				// std::cout << testMap.Get_gameObject(i, j).get_x() << " " << testMap.Get_gameObject(i, j).get_y() << '\n';
+				if (player1.iscoll(testMap.Get_gameObject(i, j)))
+				{
+					player1.releasePos();
+				}
+				if (player2.iscoll(testMap.Get_gameObject(i, j)))
+				{
+					player2.releasePos();
+				}
+			}
+		}
+	}
 }
 
 
