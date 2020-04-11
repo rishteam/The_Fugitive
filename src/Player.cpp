@@ -120,7 +120,6 @@ Command *InputHandler::handleInput(int id)
 
 void Player::handle_input()
 {
-    printf("%d\n", this->getid());
     Command *cmd = inputhandler->handleInput(this->getid());
     if (cmd)
         cmd->execute(*this);

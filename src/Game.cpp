@@ -56,11 +56,11 @@ void Game::imgui(sf::RenderWindow &window)
 		for (int i = 0; i < 16; i++)
 		{
 			ImGui::PushID(j * 20 + i);
-			
+
 			if( ImGui::ImageButton(testS[select[i][j]],ImVec2(30,30)) ){
 				select[i][j] = (select[i][j]+1)%4;
 			}
-			
+
 			ImGui::SameLine();
 			if (select[i][j] == 0)
 				testMap.setPlane(i, j);
@@ -130,12 +130,12 @@ void Game::coll_detect()
 {
     if (player1.iscoll(player2))
     {
-        printf("player1 colli player2\n");
+        // printf("player1 colli player2\n");
         player1.releasePos();
     }
     if (player2.iscoll(player1))
     {
-        printf("player2 colli player1\n");
+        // printf("player2 colli player1\n");
         player2.releasePos();
     }
 
