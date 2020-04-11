@@ -6,11 +6,11 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 #define GAME_NAME "The_Fugitive"
-#define MOVE_UNIT 10
+
 
 void Game::init()
 {
-    player1.init(40, 40, 80, 80, 1);
+    player1.init(100, 100, 80, 80, 1);
     player1.set_sprite_src("assets/player.png");
     player1.scale(1.2,0.9);
     player2.init(440, 440, 80, 80, 2);
@@ -99,20 +99,20 @@ void Game::run(sf::RenderWindow &window)
 {
     player1.storePos();
     player2.storePos();
-    handleEvent(window, player1, MOVE_UNIT);
-    handleEvent(window, player2, MOVE_UNIT);
+    player1.handle_input();
+    player2.handle_input();
     coll_detect();
     map_collision_test(window);
 
     testMap.draw(window);
 
-    player1.update_imgui_parameter();
+    // player1.update_imgui_parameter();
     player1.update();
     player1.debug(window);
     player1.draw(window);
 
     player2.update();
-    player2.update_imgui_parameter();
+    // player2.update_imgui_parameter();
     player2.debug(window);
     player2.draw(window);
 }
@@ -148,46 +148,3 @@ void Game::coll_detect()
     }
 }
 
-void Game::handleEvent(sf::RenderWindow &window, Player &player, int move_unit)
-{
-    switch(player.getid())
-    {
-
-        case 1:
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-            {
-                player.move_up(move_unit);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-            {
-                player.move_down(move_unit);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-            {
-                player.move_left(move_unit);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-            {
-                player.move_right(move_unit);
-            }
-            break;
-        case 2:
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-            {
-                player.move_up(move_unit);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-            {
-                player.move_down(move_unit);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            {
-                player.move_left(move_unit);
-            }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            {
-                player.move_right(move_unit);
-            }
-            break;
-    }
-}

@@ -1,12 +1,13 @@
 #include "Player.h"
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#include "Command.h"
+
 
 Player::Player(int x, int y, int w, int h){
     center_x = x;
     center_y = y;
     width = w;
     height = h;
+    inputhandler = new InputHandler();
 }
 
 void Player::init(int x, int y, int w, int h, int id_)
@@ -16,6 +17,7 @@ void Player::init(int x, int y, int w, int h, int id_)
     width = w;
     height = h;
     id = id_;
+    inputhandler = new InputHandler();
 }
 
 void Player::storePos()
@@ -70,3 +72,56 @@ void Player::update_imgui_parameter()
 // {
 
 // }
+
+InputHandler::InputHandler()
+{
+    Up_Command = new UpCommand();
+    Down_Command = new DownCommand();
+    Left_Command = new LeftCommand();
+    Right_Command = new RightCommand();
+}
+
+InputHandler::~InputHandler()
+{
+    delete Up_Command;
+    delete Down_Command;
+    delete Left_Command;
+    delete Right_Command;
+}
+
+// use command pattern
+Command *InputHandler::handleInput(int id)
+{
+    switch (id)
+    {
+        case 1:
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+                return Up_Command;
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+                return Down_Command;
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+                return Left_Command;
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+                return Right_Command;
+            break;
+        case 2:
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+                return Up_Command;
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+                return Down_Command;
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+                return Left_Command;
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                return Right_Command;
+            break;
+    }
+    return nullptr;
+}
+
+void Player::handle_input()
+{
+    printf("%d\n", this->getid());
+    Command *cmd = inputhandler->handleInput(this->getid());
+    if (cmd)
+        cmd->execute(*this);
+}
